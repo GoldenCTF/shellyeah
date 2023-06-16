@@ -11,7 +11,7 @@ you should now be able to run shellyeah from any path on your system.
 youtube link "pending"
 
 
-OBS: not all shells are tested
+OBS: not all shells are tested.
 all shells from the list should be generated to a file in the directory typed in the script.
 the msfvenom entry should generate a exe or elf file as if you typed out the whole command.
 
