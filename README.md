@@ -8,7 +8,7 @@ How to install
 
 you should now be able to run shellyeah from any path on your system.
 
-youtube link "pending"
+youtube [https://www.youtube.com/watch?v=ug6qPIbchvE](https://www.youtube.com/watch?v=ug6qPIbchvE)
 
 
 OBS: not all shells are tested.
