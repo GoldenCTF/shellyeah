@@ -490,7 +490,7 @@ def python_menu():
 			generate_python_3_windows()
 		elif choice == "6":
 			generate_python_3_shortest()
-		elif choice == "6":
+		elif choice == "7":
 			generate_python_3_simple()
 	except KeyboardInterrupt:
 		print("\nInterrupted, returning to main menu.....")
